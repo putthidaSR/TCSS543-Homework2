@@ -1,5 +1,4 @@
-# TCSS543 - Advanced Algorithms
-## Fall 2019
+# TCSS543 - Advanced Algorithms (Autumn 2019)
 
 ## Homework2 - Problem #4
 
