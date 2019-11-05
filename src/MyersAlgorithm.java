@@ -1,44 +1,58 @@
-
+/**
+ * This class contains business logic to implement Myers Algorithms.
+ */
 public class MyersAlgorithm {
+	
+	/**
+	 * Apply Myers Algorithm (Edit Distance) to find the minimum cost of edit operations to transform one string to the other.
+	 * 
+	 * @param listA sequence of positive integer
+	 * @param listB sequence of positive integer
+	 * @return minimum cost of edit operations (copy, insert, delete)
+	 */
+	public static int myerAlgorithm(int[] listA, int[] listB) {
 
-	public static int minDistance(String word1, String word2) {
-		
-		int n = word1.length();
-		int m = word2.length();
+		int m = listA.length;
+		int n = listB.length;
 
 		// if one of the strings is empty
 		if (n * m == 0) {
 			return n + m;
 		}
 
-		// array to store the convertion history
-		int[][] d = new int[n + 1][m + 1];
+		// initialize the array to store the conversion history
+		int v[] = new int[2 * (m + n)];
+		int i, j = 0;
+	
+		/*
+		 * Loop through the sequence of integers from both given lists to perform three opertions:
+		 * - copying one character to another character
+		 * - deleting a character
+		 * - inserting a character
+		 */
+		for (int d = 0; d <= m + n; d++) {
 
-		// init boundaries
-		for (int i = 0; i < n + 1; i++) {
-			d[i][0] = i;
-		}
-		for (int j = 0; j < m + 1; j++) {
-			d[0][j] = j;
-		}
-
-		// DP compute
-		for (int i = 1; i < n + 1; i++) {
-			for (int j = 1; j < m + 1; j++) {
-				int left = d[i - 1][j] + 1;
-				int down = d[i][j - 1] + 1;
-				int left_down = d[i - 1][j - 1];
-				if (word1.charAt(i - 1) != word2.charAt(j - 1))
-					left_down += 1;
-				d[i][j] = Math.min(left, Math.min(down, left_down));
-
+			for (int k = d; k <= d; k += 2) {
+				
+				if (k == -d || k != d && v[k - 1] < v[k + 1]) {
+					j = v[k + 1];
+				} else {
+					j = v[k - 1] + 1;
+				}
+				
+				i = j - k;
+				while (j < n && i < m && listB[j + 1] == listA[i + 1]) {
+					i++;
+					j++;
+				}
+				
+				v[k] = j;
+				if (j >= n && i >= m) {
+					return d;
+				}
 			}
 		}
-		return d[n][m];
-	}
-
-	public static void main(String[] args) {
-		System.out.println(minDistance("newton", "einstein"));
+		return 0;
 	}
 
 }

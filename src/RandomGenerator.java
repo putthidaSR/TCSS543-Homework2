@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -9,22 +10,24 @@ public class RandomGenerator {
 	private static final int FIRST_LIST_MAX_SIZE = 3;
 	private static final int SECOND_LIST_MAX_SIZE = 5;
 	
-	private static final int RANDOM_GENERATOR_RANGE = 99;
+	private static final int RANDOM_GENERATOR_RANGE = 9;
 	
 	public RandomGenerator() {
-		
-	}
 
+	}
+	
 	public static int[] getFirstList() {
-		
-		// create instance of Random class 
-        Random rand = new Random(); 
-        
+
+		// create instance of Random class
+		Random rand = new Random();
+
 		int[] arr = new int[FIRST_LIST_MAX_SIZE];
 
 		for (int i = 0; i < FIRST_LIST_MAX_SIZE; i++) {
 			arr[i] = rand.nextInt(RANDOM_GENERATOR_RANGE);
 		}
+		
+		System.out.println("First list: " + Arrays.toString(arr));
 		return arr;
 	}
 	
@@ -40,7 +43,7 @@ public class RandomGenerator {
 		for (int i = FIRST_LIST_MAX_SIZE; i < SECOND_LIST_MAX_SIZE; i++) {
 			secondList[i] = rand.nextInt(RANDOM_GENERATOR_RANGE);
 		}
-		System.out.println(Arrays.toString(secondList));
+		//System.out.println(Arrays.toString(secondList));
 		
 		// Delete the element in the list at the given position
 		int[] listAfterDeletionn = removeTheElement(secondList, deletionPosition);
@@ -49,7 +52,7 @@ public class RandomGenerator {
 		// Insert the element to the list at the given position
 		int[] resultantList = insertElementAtGivenPosition(listAfterDeletionn, rand.nextInt(RANDOM_GENERATOR_RANGE), getInsertionPosition(deletionPosition));
 		
-		// System.out.println(Arrays.toString(resultantList));
+		System.out.println("Second list: " + Arrays.toString(resultantList));
 		
 		return resultantList;
 	}
@@ -88,6 +91,21 @@ public class RandomGenerator {
 				.stream()
 				.mapToInt(Integer::intValue)
 				.toArray();
+	}
+	
+	/**
+	 * Returns a map of deletion position.
+	 */
+	public static HashMap<Integer, Integer> getDeletePosition() {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		
+		int[] deletePositionArray = {10, 50, 100, 200, 400, 600, 800, 100}; // given as part of the assignment
+		
+		for (int i = 1; i <= 8; i++) {
+			map.put(i, deletePositionArray[i - 1]);
+		}
+		
+		return map;
 	}
 
 }
